@@ -15,10 +15,17 @@ namespace game_library_backend.Controllers
         {
             _gameInterface = gameInterface;
         }
+
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<GameModel>>>> GetGames()
         {
             return Ok(await _gameInterface.GetGames());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<List<GameModel>>>> CreateGame(GameModel newGame)
+        {
+            return Ok(await _gameInterface.CreateGame(newGame));
         }
     }
 }

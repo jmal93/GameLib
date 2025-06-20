@@ -11,9 +11,32 @@ public class GameService : IGameInterface
     {
         _context = context;
     }
-    public Task<ServiceResponse<List<GameModel>>> CreateGame(GameModel newGame)
+    public async Task<ServiceResponse<List<GameModel>>> CreateGame(GameModel newGame)
     {
-        throw new NotImplementedException();
+        ServiceResponse<List<GameModel>> serviceResponse = new ServiceResponse<List<GameModel>>();
+
+        try
+        {
+            if (newGame == null)
+            {
+                serviceResponse.Dados = null;
+                serviceResponse.Mensagem = "Dados não informados";
+                serviceResponse.Sucesso = false;
+
+                return serviceResponse;
+            }
+            _context.Add(newGame);
+            await _context.SaveChangesAsync();
+
+            serviceResponse.Dados = _context.Games.ToList();
+        }
+        catch (Exception e)
+        {
+            serviceResponse.Mensagem = e.Message;
+            serviceResponse.Sucesso = false;
+        }
+
+        return serviceResponse;
     }
 
     public Task<ServiceResponse<List<GameModel>>> DeleteGame(int Id)
