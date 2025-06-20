@@ -35,5 +35,21 @@ namespace game_library_backend.Controllers
         {
             return Ok(await _gameInterface.CreateGame(newGame));
         }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<List<GameModel>>>> UpdateGame(GameModel updatedGame)
+        {
+            ServiceResponse<List<GameModel>> serviceResponse = await _gameInterface.UpdateGame(updatedGame);
+
+            return Ok(serviceResponse);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<ServiceResponse<List<GameModel>>>> DeleteGame(int Id)
+        {
+            ServiceResponse<List<GameModel>> serviceResponse = await _gameInterface.DeleteGame(Id);
+
+            return Ok(serviceResponse);
+        }
     }
 }

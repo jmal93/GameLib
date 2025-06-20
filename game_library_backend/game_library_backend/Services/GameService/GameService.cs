@@ -1,6 +1,7 @@
 using Azure.Core.Pipeline;
 using game_library_backend.DataContext;
 using game_library_backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace game_library_backend.Services.GameService;
 
@@ -39,9 +40,35 @@ public class GameService : IGameInterface
         return serviceResponse;
     }
 
-    public Task<ServiceResponse<List<GameModel>>> DeleteGame(int Id)
+    public async Task<ServiceResponse<List<GameModel>>> DeleteGame(int Id)
     {
-        throw new NotImplementedException();
+        ServiceResponse<List<GameModel>> serviceResponse = new ServiceResponse<List<GameModel>>();
+
+        try
+        {
+            GameModel game = _context.Games.FirstOrDefault(x => x.Id == Id);
+
+            if (game == null)
+            {
+                serviceResponse.Dados = null;
+                serviceResponse.Mensagem = "Jogo não encontrado";
+                serviceResponse.Sucesso = false;
+
+                return serviceResponse;
+            }
+
+            _context.Games.Remove(game);
+            await _context.SaveChangesAsync();
+
+            serviceResponse.Dados = _context.Games.ToList();
+        }
+        catch (Exception e)
+        {
+            serviceResponse.Mensagem = e.Message;
+            serviceResponse.Sucesso = false;
+        }
+
+        return serviceResponse;
     }
 
     public async Task<ServiceResponse<GameModel>> GetGameById(int Id)
@@ -92,8 +119,32 @@ public class GameService : IGameInterface
         return serviceResponse;
     }
 
-    public Task<ServiceResponse<List<GameModel>>> UpdateGame(GameModel updatedGame)
+    public async Task<ServiceResponse<List<GameModel>>> UpdateGame(GameModel updatedGame)
     {
-        throw new NotImplementedException();
+        ServiceResponse<List<GameModel>> serviceResponse = new ServiceResponse<List<GameModel>>();
+
+        try
+        {
+            GameModel game = _context.Games.AsNoTracking().FirstOrDefault(x => x.Id == updatedGame.Id);
+
+            if (game == null)
+            {
+                serviceResponse.Dados = null;
+                serviceResponse.Mensagem = "Jogo não encontrado";
+                serviceResponse.Sucesso = false;
+            }
+
+            _context.Games.Update(updatedGame);
+            await _context.SaveChangesAsync();
+
+            serviceResponse.Dados = _context.Games.ToList();
+        }
+        catch (Exception e)
+        {
+            serviceResponse.Mensagem = e.Message;
+            serviceResponse.Sucesso = false;
+        }
+
+        return serviceResponse;
     }
 }
