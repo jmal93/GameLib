@@ -1,4 +1,5 @@
 using game_library_backend.DataContext;
+using game_library_backend.Services.GameService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<IGameInterface, GameService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
