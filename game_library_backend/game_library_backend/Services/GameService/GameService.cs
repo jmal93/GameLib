@@ -44,9 +44,30 @@ public class GameService : IGameInterface
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResponse<GameModel>> GetGameById(int Id)
+    public async Task<ServiceResponse<GameModel>> GetGameById(int Id)
     {
-        throw new NotImplementedException();
+        ServiceResponse<GameModel> serviceResponse = new ServiceResponse<GameModel>();
+
+        try
+        {
+            GameModel game = _context.Games.FirstOrDefault(x => x.Id == Id);
+
+            if (game == null)
+            {
+                serviceResponse.Dados = null;
+                serviceResponse.Mensagem = "Jogo não encontrado";
+                serviceResponse.Sucesso = false;
+            }
+
+            serviceResponse.Dados = game;
+        }
+        catch (Exception e)
+        {
+            serviceResponse.Mensagem = e.Message;
+            serviceResponse.Sucesso = false;
+        }
+
+        return serviceResponse;
     }
 
     public async Task<ServiceResponse<List<GameModel>>> GetGames()

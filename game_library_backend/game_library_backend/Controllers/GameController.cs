@@ -22,6 +22,14 @@ namespace game_library_backend.Controllers
             return Ok(await _gameInterface.GetGames());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServiceResponse<GameModel>>> GetGameById(int Id)
+        {
+            ServiceResponse<GameModel> serviceResponse = await _gameInterface.GetGameById(Id);
+
+            return Ok(serviceResponse);
+        }
+
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<GameModel>>>> CreateGame(GameModel newGame)
         {
