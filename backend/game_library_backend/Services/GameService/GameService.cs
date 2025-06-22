@@ -46,7 +46,7 @@ public class GameService : IGameInterface
 
         try
         {
-            GameModel game = _context.Games.FirstOrDefault(x => x.Id == Id);
+            GameModel? game = _context.Games.FirstOrDefault(x => x.Id == Id);
 
             if (game == null)
             {
@@ -77,13 +77,14 @@ public class GameService : IGameInterface
 
         try
         {
-            GameModel game = _context.Games.FirstOrDefault(x => x.Id == Id);
+            GameModel? game = await _context.Games.FirstOrDefaultAsync(x => x.Id == Id);
 
             if (game == null)
             {
                 serviceResponse.Dados = null;
                 serviceResponse.Mensagem = "Jogo não encontrado";
                 serviceResponse.Sucesso = false;
+                return serviceResponse;
             }
 
             serviceResponse.Dados = game;
@@ -103,7 +104,7 @@ public class GameService : IGameInterface
 
         try
         {
-            serviceResponse.Dados = _context.Games.ToList();
+            serviceResponse.Dados = await _context.Games.ToListAsync();
 
             if (serviceResponse.Dados.Count == 0)
             {
@@ -125,7 +126,7 @@ public class GameService : IGameInterface
 
         try
         {
-            GameModel game = _context.Games.AsNoTracking().FirstOrDefault(x => x.Id == updatedGame.Id);
+            GameModel? game = _context.Games.AsNoTracking().FirstOrDefault(x => x.Id == updatedGame.Id);
 
             if (game == null)
             {

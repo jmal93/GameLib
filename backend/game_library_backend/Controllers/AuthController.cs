@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using game_library_backend.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -31,12 +30,14 @@ namespace game_library_backend.Controllers
         private string GenerateJwtToken(IdentityUser user, IList<string> roles)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ??
+                throw new InvalidOperationException("Jwt key not configured"));
 
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Email, user.Email ??
+                    throw new InvalidOperationException("User email is null")),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -64,10 +65,9 @@ namespace game_library_backend.Controllers
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
-            var passwordValid = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
-            if (user == null || !passwordValid)
+            if (user == null || await _userManager.CheckPasswordAsync(user, loginViewModel.Password))
             {
-                Unauthorized(new { message = "Invalid user or password" });
+                return Unauthorized(new { message = "Invalid user or password" });
             }
 
             var roles = await _userManager.GetRolesAsync(user);

@@ -22,7 +22,7 @@ namespace game_library_backend.Controllers
             return Ok(await _gameInterface.GetGames());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id:int}")]
         public async Task<ActionResult<ServiceResponse<GameModel>>> GetGameById(int Id)
         {
             ServiceResponse<GameModel> serviceResponse = await _gameInterface.GetGameById(Id);

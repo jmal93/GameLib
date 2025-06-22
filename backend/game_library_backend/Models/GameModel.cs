@@ -14,5 +14,5 @@ public class GameModel
     public decimal? Price { get; set; }
     public required string Developer { get; set; }
     public string? Image { get; set; }
-    public ICollection<GameGenreModel> GameGenres { get; set; }
+    public ICollection<GameGenreModel>? GameGenres { get; set; }
 }
