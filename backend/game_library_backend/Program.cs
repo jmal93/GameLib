@@ -13,7 +13,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
 
-builder.Services.AddScoped<IGameInterface, GameService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNextJs",
+        builder => builder
+            .WithOrigins("http://localhost:3000")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+    );
+});
+
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
@@ -68,6 +78,7 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 
 app.UseRouting();
+app.UseCors("AllowNextJs");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

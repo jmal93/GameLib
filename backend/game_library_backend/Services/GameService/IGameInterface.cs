@@ -4,9 +4,9 @@ namespace game_library_backend.Services.GameService;
 
 public interface IGameInterface
 {
-    Task<ServiceResponse<List<GameModel>>> GetGames();
-    Task<ServiceResponse<List<GameModel>>> CreateGame(GameModel newGame);
-    Task<ServiceResponse<GameModel>> GetGameById(int Id);
-    Task<ServiceResponse<List<GameModel>>> UpdateGame(GameModel updatedGame);
-    Task<ServiceResponse<List<GameModel>>> DeleteGame(int Id);
+    Task<List<GameModel>> GetGames();
+    Task<List<GameModel>> CreateGame(GameModel newGame);
+    Task<GameModel> GetGameById(int Id);
+    Task<List<GameModel>> UpdateGame(GameModel updatedGame);
+    Task<List<GameModel>> DeleteGame(int Id);
 }
