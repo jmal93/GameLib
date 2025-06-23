@@ -20,6 +20,9 @@ export function Header() {
                         <li>
                             <Link href={"/profile"}>Perfil</Link>
                         </li>
+                        <li>
+                            <Link href={"/games"}>Jogos</Link>
+                        </li>
                     </ul>
                 </nav>
             </div>
