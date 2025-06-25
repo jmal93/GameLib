@@ -62,20 +62,37 @@ namespace game_library_backend.Controllers
         }
 
         [HttpGet("{Id:int}")]
-        public async Task<ActionResult<GameModel>> GetGameById(int Id)
+        public async Task<ActionResult<GameDTO>> GetGameById(int Id)
         {
-            GameModel result;
+            GameDTO result;
             try
             {
-                GameModel? game = await _context.Games
-                    .FirstOrDefaultAsync(x => x.Id == Id);
+                var game = await _context.Games
+                    .Include(g => g.GameGenres)
+                    .ThenInclude(gg => gg.Genre)
+                    .FirstOrDefaultAsync(g => g.Id == Id);
 
                 if (game == null)
                 {
-                    return NoContent();
+                    return NotFound();
                 }
 
-                result = game;
+                GameDTO gameDTO = new()
+                {
+                    Id = game.Id,
+                    Name = game.Name,
+                    ReleaseDate = game.ReleaseDate,
+                    Price = game.Price,
+                    Developer = game.Developer,
+                    Image = game.Image,
+                    Genres = [.. game.GameGenres.Select(gg => new GenreDTO
+                    {
+                        Id = gg.Genre.Id,
+                        Name = gg.Genre.Name
+                    })]
+                };
+
+                result = gameDTO;
             }
             catch (Exception e)
             {
