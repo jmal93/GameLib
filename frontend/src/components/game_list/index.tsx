@@ -14,9 +14,12 @@ export const GameList = ({ games }: GameListProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {games.map((game) => (
           <div key={game.id} className="border rounded shadow-sm p-3">
-            <h2 className="text-x1 font-bold mb-2">{game.name}</h2>
-            <p>{game.developer}</p>
-            <p>{game.releaseDate}</p>
+            <h2 className="text-2xl font-bold mb-2">{game.name}</h2>
+            <p>Developer: {game.developer}</p>
+            <p>
+              Release date: {new Date(game.releaseDate).toLocaleDateString()}
+            </p>
+            <p>Genres: {game.genres.map((g) => g.name).join(", ")}</p>
           </div>
         ))}
       </div>

@@ -1,3 +1,5 @@
+import { Genre } from "./Genre";
+
 export interface Game {
   id: number;
   name: string;
@@ -5,5 +7,5 @@ export interface Game {
   price?: number;
   developer: string;
   image?: string;
-  gameGenres?: string;
+  genres: Genre[];
 }
