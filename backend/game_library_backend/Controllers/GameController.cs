@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using game_library_backend.DataContext;
+using game_library_backend.DTOs;
 using game_library_backend.Models;
 using game_library_backend.Services.GameService;
 using Microsoft.AspNetCore.Authorization;
@@ -22,17 +23,34 @@ namespace game_library_backend.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<List<GameModel>>> GetGames()
+        public async Task<ActionResult<IEnumerable<GameDTO>>> GetGames()
         {
-            List<GameModel> result = new List<GameModel>();
+            IEnumerable<GameDTO> result;
 
             try
             {
-                result = await _context.Games.ToListAsync();
+                result = await _context.Games
+                    .Include(g => g.GameGenres)
+                    .ThenInclude(gg => gg.Genre)
+                    .Select(g => new GameDTO
+                    {
+                        Id = g.Id,
+                        Name = g.Name,
+                        Developer = g.Developer,
+                        Image = g.Image,
+                        ReleaseDate = g.ReleaseDate,
+                        Price = g.Price,
+                        Genres = g.GameGenres.Select(gg => new GenreDTO
+                        {
+                            Id = gg.Genre.Id,
+                            Name = gg.Genre.Name
+                        }).ToList()
+                    })
+                    .ToListAsync();
 
-                if (result.Count == 0)
+                if (!result.Any())
                 {
-                    return NoContent();
+                    return Ok("No games available");
                 }
             }
             catch (Exception e)
