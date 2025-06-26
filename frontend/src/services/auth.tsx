@@ -9,10 +9,9 @@ const axiosClient = axios.create({
 
 export const submitLogin = async (body: string): Promise<any> => {
   try {
-    const response: AxiosResponse<any, any> = await axiosClient.post("/login");
-
-    return response.status;
+    const response = await axiosClient.post("/login", body);
+    return response;
   } catch (e) {
-    console.error("Error in logging in user");
+    console.error("Error in logging in user: ", e);
   }
 };
