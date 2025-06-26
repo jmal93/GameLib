@@ -1,3 +1,4 @@
+import { submitLogin } from "@/services/auth";
 import { FormEvent } from "react";
 
 export default async function Login() {
@@ -5,6 +6,10 @@ export default async function Login() {
     const formData = new FormData(event.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
+    const body = JSON.stringify({ email, password });
+
+    const response = submitLogin(body);
+    console.log(response);
   }
 
   return (
