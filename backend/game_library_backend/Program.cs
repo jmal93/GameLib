@@ -1,6 +1,5 @@
 using System.Text;
 using game_library_backend.DataContext;
-using game_library_backend.Services.GameService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
