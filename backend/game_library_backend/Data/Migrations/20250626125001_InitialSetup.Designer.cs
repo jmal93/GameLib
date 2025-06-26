@@ -12,8 +12,8 @@ using game_library_backend.DataContext;
 namespace game_library_backend.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250622050509_UsersTable")]
-    partial class UsersTable
+    [Migration("20250626125001_InitialSetup")]
+    partial class InitialSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
