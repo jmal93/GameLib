@@ -65,7 +65,8 @@ namespace game_library_backend.Controllers
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
-            if (user == null || await _userManager.CheckPasswordAsync(user, loginViewModel.Password))
+            Console.WriteLine(user);
+            if (user == null || !await _userManager.CheckPasswordAsync(user, loginViewModel.Password))
             {
                 return Unauthorized(new { message = "Invalid user or password" });
             }
