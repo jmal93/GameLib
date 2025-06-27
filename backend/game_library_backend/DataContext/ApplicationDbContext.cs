@@ -14,6 +14,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<GameModel> Games { get; set; }
     public DbSet<GenreModel> Genres { get; set; }
     public DbSet<GameGenreModel> GameGenres { get; set; }
+    public DbSet<UserGameLibraryModel> UserGameLibraries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,5 +31,18 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
             .HasOne(gg => gg.Genre)
             .WithMany(g => g.GameGenres)
             .HasForeignKey(gg => gg.GenreId);
+
+        modelBuilder.Entity<UserGameLibraryModel>()
+            .HasKey(gl => gl.Id);
+
+        modelBuilder.Entity<UserGameLibraryModel>()
+            .HasOne(u => u.User)
+            .WithMany()
+            .HasForeignKey(u => u.UserId);
+
+        modelBuilder.Entity<UserGameLibraryModel>()
+            .HasOne(g => g.Game)
+            .WithMany()
+            .HasForeignKey(g => g.GameId);
     }
 }
