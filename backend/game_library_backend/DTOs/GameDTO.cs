@@ -8,5 +8,5 @@ public class GameDTO
     public decimal? Price { get; set; }
     public required string Developer { get; set; }
     public string? Image { get; set; }
-    public required List<GenreDTO> Genres { get; set; }
+    public required List<string> Genres { get; set; }
 }

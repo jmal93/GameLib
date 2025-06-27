@@ -36,11 +36,7 @@ namespace game_library_backend.Controllers
                         Image = g.Image,
                         ReleaseDate = g.ReleaseDate,
                         Price = g.Price,
-                        Genres = g.GameGenres.Select(gg => new GenreDTO
-                        {
-                            Id = gg.Genre.Id,
-                            Name = gg.Genre.Name
-                        }).ToList()
+                        Genres = g.GameGenres.Select(gg => gg.Genre.Name).ToList()
                     })
                     .ToListAsync();
 
@@ -81,11 +77,7 @@ namespace game_library_backend.Controllers
                     Price = game.Price,
                     Developer = game.Developer,
                     Image = game.Image,
-                    Genres = [.. game.GameGenres.Select(gg => new GenreDTO
-                    {
-                        Id = gg.Genre.Id,
-                        Name = gg.Genre.Name
-                    })]
+                    Genres = game.GameGenres.Select(gg => gg.Genre.Name).ToList()
                 };
 
                 result = gameDTO;
