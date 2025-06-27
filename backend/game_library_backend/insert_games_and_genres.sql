@@ -38,7 +38,7 @@ SELECT g.Id, ge.Id
 FROM (VALUES
     ('Battlefield 4', 'Action'),
     ('Battlefield 4', 'FPS'),
-    ('Civilization', 'Strategy'),
+    ('Civilization VI', 'Strategy'),
     ('Cyberpunk 2077', 'Action'),
     ('Cyberpunk 2077', 'FPS'),
     ('Cyberpunk 2077', 'RPG'),

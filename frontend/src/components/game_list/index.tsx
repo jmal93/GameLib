@@ -19,7 +19,14 @@ export const GameList = ({ games }: GameListProps) => {
             <p>
               Release date: {new Date(game.releaseDate).toLocaleDateString()}
             </p>
-            <p>Genres: {game.genres.map((g) => g.name).join(", ")}</p>
+            <p>Genres: {game.genres.join(", ")}</p>
+            <p>
+              Price:{" "}
+              {game.price?.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </p>
           </div>
         ))}
       </div>
