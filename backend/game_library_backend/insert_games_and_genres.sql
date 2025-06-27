@@ -5,20 +5,20 @@ DELETE FROM GameGenres;
 DBCC CHECKIDENT ('Games', RESEED, 0);
 DBCC CHECKIDENT ('Genres', RESEED, 0);
 
-INSERT INTO Games (Name, Developer, ReleaseDate) VALUES
-('Battlefield 4', 'DICE', '2013-10-29'),
-('Civilization', 'Firaxis Games', '2016-10-21'),
-('Cyberpunk 2077', 'CD Projekt Red', '2020-12-10'),
-('FIFA 23', 'EA', '2022-09-23'),
-('Guitar Hero 3', 'Neversoft', '2007-10-28'),
-('Hearts of Iron IV', 'Paradox', '2016-06-06'),
-('Hollow Knight', 'Team Cherry', '2017-02-24'),
-('Mortal Kombat 1', 'NetherRealm', '2023-09-19'),
-('Portal', 'Valve', '2007-10-09'),
-('Red Dead Redemption 2', 'Rockstar', '2018-10-26'),
-('Sifu', 'Sloclap', '2022-02-08'),
-('Silent Hill 2', 'Konami', '2001-09-21'),
-('Undertale', 'Toby Fox', '2015-09-15');
+INSERT INTO Games (Name, Developer, ReleaseDate, Price) VALUES
+('Battlefield 4', 'DICE', '2013-10-29', 39.99),
+('Civilization VI', 'Firaxis Games', '2016-10-21', 59.99),
+('Cyberpunk 2077', 'CD Projekt Red', '2020-12-10', 59.99),
+('FIFA 23', 'EA', '2022-09-23', 69.99),
+('Guitar Hero 3', 'Neversoft', '2007-10-28', 24.99),
+('Hearts of Iron IV', 'Paradox', '2016-06-06', 49.99),
+('Hollow Knight', 'Team Cherry', '2017-02-24', 14.99),
+('Mortal Kombat 1', 'NetherRealm', '2023-09-19', 49.99),
+('Portal', 'Valve', '2007-10-09', 9.99),
+('Red Dead Redemption 2', 'Rockstar', '2018-10-26', 59.99),
+('Sifu', 'Sloclap', '2022-02-08', 39.99),
+('Silent Hill 2', 'Konami', '2001-09-21', 69.99),
+('Undertale', 'Toby Fox', '2015-09-15', 9.99);
 
 INSERT INTO Genres (Name) VALUES
 ('Action'),
