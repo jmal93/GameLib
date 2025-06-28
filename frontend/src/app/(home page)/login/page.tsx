@@ -1,6 +1,6 @@
 "use client";
 
-import { submitLogin } from "@/services/auth";
+import { setToken, submitLogin } from "@/services/api";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 
@@ -18,6 +18,7 @@ export default function Login() {
     const response = await submitLogin(body);
 
     if (response.status == 200) {
+      setToken(response.data["token"]);
       route.push("/games");
     }
   }
