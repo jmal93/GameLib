@@ -1,19 +1,21 @@
 import axios, { AxiosResponse } from "axios";
 import { Game } from "@/models/Game";
-
-let token = "";
+import { getAuthToken } from "./auth";
 
 const axiosClient = axios.create({
   baseURL: "http://localhost:5102/api",
   headers: {
     "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
   },
 });
 
-export const setToken = (new_token: string) => {
-  token = new_token;
-};
+axiosClient.interceptors.request.use((config) => {
+  const token = getAuthToken();
+  if (token) {
+    config.headers.Authorization = "Bearer ${token}";
+  }
+  return config;
+});
 
 export const submitLogin = async (body: string): Promise<any> => {
   try {
