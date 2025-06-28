@@ -1,11 +1,18 @@
 "use client";
 
+import { removeAuthToken } from "@/services/auth";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export function Header() {
+  const router = useRouter();
   const pathName = usePathname();
   const isAuthPage = ["/login", "/signup"].includes(pathName);
+
+  function handleLogout() {
+    removeAuthToken();
+    router.push("/login");
+  }
 
   return (
     <header className="px-2 py-3 bg-black text-white">
@@ -22,6 +29,9 @@ export function Header() {
               </li>
               <li>
                 <Link href={"/games"}>Games</Link>
+              </li>
+              <li>
+                <button onClick={handleLogout}>Logout</button>
               </li>
             </ul>
           </nav>
