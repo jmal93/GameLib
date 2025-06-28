@@ -1,17 +1,16 @@
-import { deleteCookie, getCookie, OptionsType, setCookie } from "cookies-next";
+"use server";
+import { cookies } from "next/headers";
 
-const cookieOptions: OptionsType = {
-  httpOnly: false,
+export const setAuthToken = async (token: string) => {
+  const cookieStore = await cookies();
+  cookieStore.set("authToken", token);
 };
 
-export const setAuthToken = (token: string) => {
-  setCookie("authToken", token, cookieOptions);
+export const getAuthToken = async () => {
+  const cookieStore = await cookies();
+  return cookieStore.get("authToken");
 };
 
-export const getAuthToken = () => {
-  return getCookie("authToken");
-};
-
-export const removeAuthToken = () => {
-  deleteCookie("authToken");
+export const removeAuthToken = async () => {
+  (await cookies()).delete("authToken");
 };

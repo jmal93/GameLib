@@ -9,10 +9,10 @@ const axiosClient = axios.create({
   },
 });
 
-axiosClient.interceptors.request.use((config) => {
-  const token = getAuthToken();
+axiosClient.interceptors.request.use(async (config) => {
+  const token = await getAuthToken();
   if (token) {
-    config.headers.Authorization = "Bearer ${token}";
+    config.headers.Authorization = "Bearer " + token.value;
   }
   return config;
 });
@@ -41,6 +41,16 @@ export const getGameById = async (id: number) => {
   const response = await axiosClient.get("/Game/" + id);
 
   return response.data;
+};
+
+export const getUserLibrary = async (): Promise<any> => {
+  try {
+    const response = await axiosClient.get("/UserGameLibrary");
+
+    return response.data;
+  } catch (e) {
+    console.error("Error in getting library: " + e);
+  }
 };
 
 export * as GameService from "@/services/api";
