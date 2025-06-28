@@ -11,22 +11,17 @@ export function Header() {
     <header className="px-2 py-3 bg-black text-white">
       <div className="flex justify-between items-center">
         <nav>
-          <div className="text-3xl">
-            <Link href={"/"}>GameLib</Link>
-          </div>
+          <div className="text-3xl">GameLib</div>
         </nav>
 
         {!isAuthPage && (
           <nav>
             <ul className="flex gap-4">
               <li>
-                <Link href={"/library"}>Biblioteca</Link>
+                <Link href={"/library"}>Library</Link>
               </li>
               <li>
-                <Link href={"/profile"}>Perfil</Link>
-              </li>
-              <li>
-                <Link href={"/games"}>Jogos</Link>
+                <Link href={"/games"}>Games</Link>
               </li>
             </ul>
           </nav>

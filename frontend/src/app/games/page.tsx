@@ -5,7 +5,7 @@ export default async function Library() {
   const games = await GameService.getAllGames();
   return (
     <div>
-      <h1 className="text-center text-4xl">Jogos</h1>
+      <h1 className="text-center text-4xl">Games</h1>
       <GameList games={games}></GameList>
     </div>
   );
