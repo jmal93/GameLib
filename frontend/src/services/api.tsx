@@ -45,7 +45,7 @@ export const getGameById = async (id: number) => {
 
 export const getUserLibrary = async (): Promise<any> => {
   try {
-    const response = await axiosClient.get("/UserGameLibrary");
+    const response = await axiosClient.get("/User/library");
 
     return response.data;
   } catch (e) {
@@ -55,7 +55,7 @@ export const getUserLibrary = async (): Promise<any> => {
 
 export const addGameToUserLibrary = async (gameId: number) => {
   try {
-    const response = await axiosClient.post("/UserGameLibrary/" + gameId);
+    const response = await axiosClient.post("/User/library/" + gameId);
 
     return response.data;
   } catch (e) {
