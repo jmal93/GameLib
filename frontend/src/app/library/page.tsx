@@ -1,4 +1,5 @@
 import { AuthGuard } from "@/components/auth_guard";
+import MeatballMenu from "@/components/meatball_library_list";
 import { GameService } from "@/services/api";
 
 export default async function Library() {
@@ -10,7 +11,13 @@ export default async function Library() {
         <h1 className="text-center text-4xl py-6">Library</h1>
         <div className="container mx-auto px-30">
           {library.map((game: any) => (
-            <div key={game.id} className="border rounded shadow-md p-3">
+            <div
+              key={game.id}
+              className="border rounded shadow-md p-3 relative"
+            >
+              <div className="absolute right-3">
+                <MeatballMenu></MeatballMenu>
+              </div>
               <h2 className="text-2xl font-bold mb-2">{game.title}</h2>
               <p>Developer: {game.developer}</p>
               <p>Genres: {game.genres.join(", ")}</p>

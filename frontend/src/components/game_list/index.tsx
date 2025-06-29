@@ -1,5 +1,5 @@
 import { Game } from "@/models/Game";
-import MeatballMenu from "../meatball";
+import MeatballMenu from "../meatball_game_list";
 
 interface GameListProps {
   games: Game[];
