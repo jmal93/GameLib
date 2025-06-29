@@ -1,9 +1,18 @@
 "use client";
 
+import { GameService } from "@/services/api";
 import { useState } from "react";
 
-export const MeatballMenu = () => {
+interface MeatballMenuProps {
+  gameId: number;
+}
+
+export const MeatballMenu = ({ gameId }: MeatballMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  function addGameToUserLibrary() {
+    GameService.addGameToUserLibrary(gameId);
+  }
 
   return (
     <div className="relative">
@@ -23,7 +32,10 @@ export const MeatballMenu = () => {
 
       {isOpen && (
         <div className="absolute right-0 py-1 w-26 bg-white rounded-md z-10 border border-gray-300">
-          <button className="block w-full text-center hover:bg-gray-100 px-2 py-2 text-sm">
+          <button
+            onClick={addGameToUserLibrary}
+            className="block w-full text-center hover:bg-gray-100 px-2 py-2 text-sm"
+          >
             Add to library
           </button>
         </div>

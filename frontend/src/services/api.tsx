@@ -53,4 +53,14 @@ export const getUserLibrary = async (): Promise<any> => {
   }
 };
 
+export const addGameToUserLibrary = async (gameId: number) => {
+  try {
+    const response = await axiosClient.post("/UserGameLibrary/" + gameId);
+
+    return response.data;
+  } catch (e) {
+    console.error("Error in adding game to library: " + e);
+  }
+};
+
 export * as GameService from "@/services/api";

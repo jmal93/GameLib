@@ -16,7 +16,7 @@ export const GameList = ({ games }: GameListProps) => {
         {games.map((game) => (
           <div key={game.id} className="border rounded shadow-sm p-3 relative">
             <div className="absolute right-3">
-              <MeatballMenu></MeatballMenu>
+              <MeatballMenu gameId={game.id}></MeatballMenu>
             </div>
             <h2 className="text-2xl font-bold mb-2">{game.name}</h2>
             <p>Developer: {game.developer}</p>

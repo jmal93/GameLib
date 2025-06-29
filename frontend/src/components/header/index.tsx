@@ -25,10 +25,10 @@ export function Header() {
           <nav>
             <ul className="flex gap-4">
               <li>
-                <Link href={"/library"}>Library</Link>
+                <Link href={"/games"}>Games</Link>
               </li>
               <li>
-                <Link href={"/games"}>Games</Link>
+                <Link href={"/library"}>Library</Link>
               </li>
               <li>
                 <button onClick={handleLogout}>Logout</button>
