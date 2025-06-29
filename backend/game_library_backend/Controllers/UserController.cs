@@ -104,5 +104,21 @@ namespace game_library_backend.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("library/{Id:int}")]
+        public async Task<IActionResult> DeleteGameFromLibrary(int Id)
+        {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var game = await context.UserGameLibraries
+                .FirstOrDefaultAsync(ug => ug.GameId == Id && ug.UserId == user.Id);
+            if (game == null) return NotFound();
+
+            context.UserGameLibraries.Remove(game);
+            await context.SaveChangesAsync();
+
+            return Ok("Game removed from library");
+        }
     }
 }
