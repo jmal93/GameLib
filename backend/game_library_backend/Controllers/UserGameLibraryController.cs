@@ -26,20 +26,25 @@ namespace game_library_backend.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost("addGame")]
-        public async Task<IActionResult> AddGameToLibrary(AddGameToLibraryDTO dTO)
+        [HttpPost("{Id:int}")]
+        public async Task<IActionResult> AddGameToLibrary(int Id)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return Unauthorized();
 
-            var game = await _context.Games.FindAsync(dTO.GameId);
+            var game = await _context.Games.FindAsync(Id);
             if (game == null) return NotFound();
+
+            bool gameAlreadyInLibrary = await _context.UserGameLibraries
+                .AnyAsync(ug => ug.GameId == Id && ug.UserId == user.Id);
+            if (gameAlreadyInLibrary)
+                return BadRequest("Game already in library");
 
             var userGame = new UserGameLibraryModel
             {
                 UserId = user.Id,
-                GameId = dTO.GameId,
-                Status = dTO.Status
+                GameId = Id,
+                Status = 0
             };
 
             _context.UserGameLibraries.Add(userGame);
