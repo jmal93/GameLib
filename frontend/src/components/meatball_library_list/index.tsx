@@ -1,10 +1,21 @@
 "use client";
 
 import { GameService } from "@/services/api";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export const MeatballMenu = () => {
+interface MeatballMenuProps {
+  gameId: number;
+}
+
+export const MeatballMenu = ({ gameId }: MeatballMenuProps) => {
+  const route = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+
+  function removeGameFromLibrary() {
+    GameService.removeGameFromLibrary(gameId);
+    route.refresh();
+  }
 
   return (
     <div className="relative">
@@ -24,7 +35,10 @@ export const MeatballMenu = () => {
 
       {isOpen && (
         <div className="absolute right-0 py-1 w-40 bg-white rounded-md z-10 border border-gray-300">
-          <button className="block w-full text-center hover:bg-gray-100 px-2 py-2 text-sm">
+          <button
+            onClick={removeGameFromLibrary}
+            className="block w-full text-center hover:bg-gray-100 px-2 py-2 text-sm"
+          >
             Remove from library
           </button>
           <button className="block w-full text-center hover:bg-gray-100 px-2 py-2 text-sm">

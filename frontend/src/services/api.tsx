@@ -63,4 +63,14 @@ export const addGameToUserLibrary = async (gameId: number) => {
   }
 };
 
+export const removeGameFromLibrary = async (gameId: number) => {
+  try {
+    const response = await axiosClient.delete("/User/library/" + gameId);
+
+    return response.data;
+  } catch (e) {
+    console.error("Error in removing game from library: " + e);
+  }
+};
+
 export * as GameService from "@/services/api";
