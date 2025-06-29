@@ -41,9 +41,6 @@ export const MeatballMenu = ({ gameId }: MeatballMenuProps) => {
           >
             Remove from library
           </button>
-          <button className="block w-full text-center hover:bg-gray-100 px-2 py-2 text-sm">
-            Update status
-          </button>
         </div>
       )}
     </div>

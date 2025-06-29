@@ -25,7 +25,6 @@ export default async function Library() {
               <h2 className="text-2xl font-bold mb-2">{game.title}</h2>
               <p>Developer: {game.developer}</p>
               <p>Genres: {game.genres.join(", ")}</p>
-              <p>Status: {game.status}</p>
               <p>Added date: {new Date(game.addedDate).toUTCString()}</p>
             </div>
           ))}
