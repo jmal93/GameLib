@@ -20,10 +20,10 @@ export const GameList = ({ games }: GameListProps) => {
             </div>
             <h2 className="text-2xl font-bold mb-2">{game.name}</h2>
             <p>Developer: {game.developer}</p>
+            <p>Genres: {game.genres.join(", ")}</p>
             <p>
               Release date: {new Date(game.releaseDate).toLocaleDateString()}
             </p>
-            <p>Genres: {game.genres.join(", ")}</p>
             <p>
               Price:{" "}
               {game.price?.toLocaleString("en-US", {
