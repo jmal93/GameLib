@@ -1,35 +1,41 @@
 "use client";
 
-import { submitLogin } from "@/services/api";
-import { setAuthToken } from "@/services/auth";
-import Link from "next/link";
+import { submitLogin, submitSignup } from "@/services/api";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 
-export default function Login() {
+export default function SignUp() {
   const route = useRouter();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+    const username = formData.get("userName");
     const email = formData.get("email");
     const password = formData.get("password");
-    const body = JSON.stringify({ email, password });
+    const body = JSON.stringify({ userName: username, email, password });
 
-    const response = await submitLogin(body);
+    console.log(body);
+
+    const response = await submitSignup(body);
 
     if (response.status == 200) {
-      setAuthToken(response.data["token"]);
-      route.push("/games");
+      route.push("/login");
     }
   }
 
   return (
     <div className="text-center">
-      <h1 className="text-4xl py-2">Login</h1>
+      <h1 className="text-4xl py-2">Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div className="grid gap-2 justify-center">
+          <input
+            name="userName"
+            placeholder="Username"
+            required
+            className="border"
+          />
           <input
             type="email"
             name="email"
@@ -45,16 +51,10 @@ export default function Login() {
             className="border"
           />
         </div>
-        <div className="py-2">
-          <button
-            type="submit"
-            className="bg-gray-300 hover:bg-gray-500 gap-y-2"
-          >
-            Login
-          </button>
-        </div>
+        <button type="submit" className="hover:bg-gray-300 gap-y-2">
+          Sign Up
+        </button>
       </form>
-      <Link href={"/signup"}>Sign up</Link>
     </div>
   );
 }

@@ -26,6 +26,15 @@ export const submitLogin = async (body: string): Promise<any> => {
   }
 };
 
+export const submitSignup = async (body: string): Promise<any> => {
+  try {
+    const response = await axiosClient.post("/Auth/register", body);
+    return response;
+  } catch (e) {
+    console.error("Error in signing up user: ", e);
+  }
+};
+
 export const getAllGames = async (): Promise<Game[]> => {
   try {
     const response: AxiosResponse<Game[]> = await axiosClient.get("/Game");
