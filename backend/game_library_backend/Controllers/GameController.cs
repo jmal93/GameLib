@@ -25,7 +25,7 @@ namespace game_library_backend.Controllers
 
             try
             {
-                result = await _context.Games
+                var games = await _context.Games
                     .Include(g => g.GameGenres)
                     .ThenInclude(gg => gg.Genre)
                     .Select(g => new GameDTO
@@ -40,10 +40,7 @@ namespace game_library_backend.Controllers
                     })
                     .ToListAsync();
 
-                if (!result.Any())
-                {
-                    return Ok("No games available");
-                }
+                result = games;
             }
             catch (Exception e)
             {

@@ -33,3 +33,5 @@ export default async function Library() {
     </AuthGuard>
   );
 }
+
+export const dynamic = "force-dynamic";
