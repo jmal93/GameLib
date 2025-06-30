@@ -1,9 +1,37 @@
+"use client";
+
 import { AuthGuard } from "@/components/auth_guard";
 import MeatballMenu from "@/components/meatball_library_list";
 import { GameService } from "@/services/api";
+import { useEffect, useState } from "react";
 
-export default async function Library() {
-  const library = await GameService.getUserLibrary();
+export default function Library() {
+  const [library, setLibrary] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    GameService.getUserLibrary()
+      .then((data) => {
+        setLibrary(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(true);
+        setLoading(false);
+      });
+  });
+
+  if (error) {
+    return (
+      <h2 className="text-center py-4 text-3xl">Error in fetching library</h2>
+    );
+  }
+
+  if (loading) {
+    return <h2 className="text-center py-4 text-3xl">Loading...</h2>;
+  }
 
   if (library.length == 0) {
     return <h2 className="text-center py-4 text-3xl">Empty library</h2>;
