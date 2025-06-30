@@ -13,6 +13,19 @@ services:
       - sql-data:/var/opt/mssql
     restart: unless-stopped
 
+  db-init:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - db
+    volumes:
+      - ./db-init:/scripts
+    entrypoint: >
+      bash -c "
+        sleep 20 &&
+        /opt/mssql-tools/bin/sqlcmd -S db -U sa -P 'Senha@123' -d GameCollection -i /scripts/insert_games_and_genres.sql
+      "
+    restart: "no"
+
   backend:
     build:
       context: ./backend/game_library_backend
