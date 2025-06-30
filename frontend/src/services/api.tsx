@@ -35,9 +35,10 @@ export const submitSignup = async (body: string): Promise<any> => {
   }
 };
 
-export const getAllGames = async (): Promise<Game[]> => {
+export const getAllGames = async (): Promise<any> => {
   try {
     const response: AxiosResponse<Game[]> = await axiosClient.get("/Game");
+    console.log(response);
 
     return response.data;
   } catch (e) {

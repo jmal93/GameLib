@@ -1,3 +1,5 @@
+"use client";
+
 import { Game } from "@/models/Game";
 import MeatballMenu from "../meatball_game_list";
 
